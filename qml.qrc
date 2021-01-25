@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/frame">
+        <file>LoginPage.qml</file>
+        <file>RegisterPage.qml</file>
+        <file>ForgetPage.qml</file>
+        <file>UserManageFrame.qml</file>
+        <file>UserItem.qml</file>
+        <file>main.qml</file>
+        <file>MsgDialog.qml</file>
+        <file>PersonalProfileFrame.qml</file>
+        <file>MainWindow.qml</file>
+    </qresource>
+    <qresource prefix="/custom_component">
+        <file>XButton.qml</file>
+        <file>XListItemTextFiled.qml</file>
+        <file>MsgDialog.qml</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>qtquickcontrols2.conf</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/ui"/>
+    <qresource prefix="/">
+        <file>error.png</file>
+        <file>alert.png</file>
+        <file>information.png</file>
+        <file>sucess.png</file>
+    </qresource>
+</RCC>
