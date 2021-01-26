@@ -29,4 +29,8 @@ ApplicationWindow {
             currentIndex: swipeui.currentIndex
             count: swipeui.count
     }
+    MsgDialog{
+        id:msg
+        objectName: "msgDialog"
+    }
 }

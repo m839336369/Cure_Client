@@ -536,7 +536,21 @@ QPair< bool, QByteArray > JQNet::HTTP::post(const QString &url, const QByteArray
 
     return { isSucceed, receiveBuffer };
 }
-
+bool JQNet::HTTP::post(const QString &url, QJsonObject &json,const int &timeout)
+{
+    QJsonDocument document;
+    document.setObject(json);
+    QPair< bool, QByteArray > request = post(url,document.toJson(),timeout);
+    qDebug()<<request.second;
+    QJsonDocument result = QJsonDocument::fromJson(request.second);
+    if(result.isObject()){
+            json = result.object();
+            return request.first;
+    }
+    else{
+        return false;
+    }
+}
 QPair< bool, QByteArray > JQNet::HTTP::post(const QNetworkRequest &request, const QByteArray &body, const int &timeout)
 {
     QByteArray receiveBuffer;

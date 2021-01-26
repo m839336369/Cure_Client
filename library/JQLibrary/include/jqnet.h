@@ -32,10 +32,10 @@
 #include <QHttpMultiPart>
 #include <QNetworkInterface>
 #include <QNetworkAddressEntry>
-
+#include <qjsondocument.h>
 // JQLibrary lib import
 #include <JQDeclare>
-
+#include <QJsonObject>
 namespace JQNet
 {
 
@@ -64,7 +64,6 @@ public:
 
 public:
     inline QNetworkAccessManager &manage() { return manage_; }
-
 
     bool get(
             const QNetworkRequest &request,
@@ -99,7 +98,6 @@ public:
             QByteArray &receiveBuffer,
             const int &timeout = 30 * 1000
         );
-
     bool post(
             const QNetworkRequest &request,
             const QSharedPointer< QHttpMultiPart > &multiPart,
@@ -165,7 +163,11 @@ public:
 
     static QPair< bool, QByteArray > post(const QString &url, const QByteArray &body, const int &timeout = 30 * 1000);
 
+    static QPair< bool, QJsonObject > post(const QString &url, const QJsonObject &json, const int &timeout = 30 * 1000);
+
     static QPair< bool, QByteArray > post(const QNetworkRequest &request, const QByteArray &body, const int &timeout = 30 * 1000);
+
+    static bool post(const QString &url, QJsonObject &json,const int &timeout  = 30 * 1000);
 
     static QPair< bool, QPair< QList< QNetworkReply::RawHeaderPair >, QByteArray > > post2(const QNetworkRequest &request, const QByteArray &body, const int &timeout = 30 * 1000);
 

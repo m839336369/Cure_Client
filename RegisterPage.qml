@@ -91,5 +91,8 @@ Page {
         anchors.topMargin: 30
         text: "注册"
         width: 120
+        onClicked: {
+            loginControl.registerUser(register_username_text.text,register_password_text.text);
+        }
     }
 }

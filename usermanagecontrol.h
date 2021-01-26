@@ -8,8 +8,8 @@ class UserManageControl : QObject
 {
     Q_OBJECT
 public slots:
-    bool update_user(long user_id,int type);
-    bool remove_user(long user_id);
+    bool update_user(qlonglong user_id,int type);
+    bool remove_user(qlonglong user_id);
 public:
     QQmlApplicationEngine *engine;
     UserManageControl(QQmlApplicationEngine &engine);

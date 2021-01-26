@@ -3,11 +3,14 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <usermanagecontrol.h>
+#include "userdao.h"
+#include "user.h"
 class LoginControl : QObject
 {
     Q_OBJECT
 public slots:
-    void login_click(QString username,QString password);
+    bool login_click(QString username,QString password);
+    bool registerUser(QString username,QString password);
 public:
     QQmlApplicationEngine *engine;
     LoginControl(QQmlApplicationEngine &engine);

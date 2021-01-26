@@ -6,10 +6,9 @@ CONFIG += c++11
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 include($$PWD/library/JQLibrary/JQLibrary.pri)
+include($$PWD/library/NetDao/NetDao.pri)
 SOURCES += \
         core.cpp \
-        library/JQLibrary/src/jqhttpserver.cpp \
-        library/JQLibrary/src/jqnet.cpp \
         logincontrol.cpp \
         main.cpp \
         user.cpp \
@@ -33,15 +32,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     core.h \
-    library/JQLibrary/include/JQDeclare \
-    library/JQLibrary/include/JQHttpServer \
-    library/JQLibrary/include/JQNet \
-    library/JQLibrary/include/jqdeclare.hpp \
-    library/JQLibrary/include/jqhttpserver.h \
-    library/JQLibrary/include/jqnet.h \
     logincontrol.h \
     user.h \
     usermanagecontrol.h
 
 DISTFILES += \
-    library/JQLibrary/JQLibrary.pri
+    library/JQLibrary/JQLibrary.pri \
+    library/NetDao/NetDao.pri

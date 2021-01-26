@@ -18,13 +18,7 @@
 #ifndef JQLIBRARY_INCLUDE_JQHTTPSERVER_H_
 #define JQLIBRARY_INCLUDE_JQHTTPSERVER_H_
 
-#ifndef QT_NETWORK_LIB
-#   error("Please add network in pro file")
-#endif
 
-#ifndef QT_CONCURRENT_LIB
-#   error("Please add concurrent in pro file")
-#endif
 
 // C++ lib import
 #include <functional>

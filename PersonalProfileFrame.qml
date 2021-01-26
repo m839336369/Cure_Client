@@ -34,7 +34,7 @@ Page {
         }
         TextField{
             id:user_user_id_textField
-            text: "839336369"
+            text: user_id
             anchors.right: parent.horizontalCenter
             anchors.top: parent.top
             anchors.rightMargin: 50
@@ -57,7 +57,7 @@ Page {
         }
         TextField{
             id:user_username_textField
-            text: "m839336369"
+            text: username
             anchors.left: user_username_label.right
             anchors.top: parent.top
             font.pixelSize: 13
@@ -75,21 +75,30 @@ Page {
         spacing: 15
         TextField{
             id:user_province_textField
-            text: "山西省"
+            text: province
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            enabled: false
             font.pixelSize: 12
             font.bold: true
             font.family: "楷体"
         }
         TextField{
             id:user_city_textField
-            text: "太原市"
+            text: city
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            enabled: false
             font.pixelSize: 12
             font.bold: true
             font.family: "楷体"
         }
         TextField{
             id:user_county_textField
-            text: "杏花岭区"
+            text: county
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            enabled: false
             font.pixelSize: 12
             font.bold: true
             font.family: "楷体"
@@ -103,11 +112,12 @@ Page {
         anchors.rightMargin: 20
         anchors.leftMargin: 20
         anchors.topMargin: 30
+        enabled: false
         model:["普通用户","县级代理","市级代理","省级代理","超级用户"]
         font.pixelSize: 12
         font.bold: true
         font.family: "楷体"
-        currentIndex: 0
+        currentIndex: type
     }
     Button{
         id:user_query_button

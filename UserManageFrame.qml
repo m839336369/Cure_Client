@@ -182,10 +182,10 @@ Page {
                 var data = users_listView.model.get(users_listView.currentIndex)
                 if(userManageWindow.remove_user(childUser_user_id_label.text)){
                     users_listView.model.remove(users_listView.currentIndex);
-                    msg.openMsg(0,"删除成功")
+                    msg.openMsg("删除成功",0)
                 }
                 else {
-                    msg.openMsg(3,"删除失败")
+                    msg.openMsg("删除失败",3)
                 }
             }
         }

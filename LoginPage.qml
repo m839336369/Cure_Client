@@ -68,8 +68,12 @@ Page {
         text: "登陆"
         width: 120
         onClicked: {
-            loginControl.login_click(login_username_text.text,login_password_text.text)
-            close()
+            if(loginControl.login_click(login_username_text.text,login_password_text.text)){
+                close()
+            }
+            else {
+                msg.openMsg("错误<br>登陆失败",3)
+            }
         }
     }
 }

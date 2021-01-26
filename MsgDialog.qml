@@ -15,10 +15,9 @@ Item {
     //Dialog header、contentItem、footer之间的间隔默认是12
     // 提示框的最小宽度是 100
     width: {
-        if(msg.implicitWidth < 100 || msg.implicitWidth == 100)
-            return 100;
-        else
-            return msg.implicitWidth > 300 ? 300 + 24 : (msg.implicitWidth + 24);
+        if(msg.text === "" || msg.implicitWidth <= 100)
+            return 130;
+        else return msg.implicitWidth > parent.width ? parent.width : (msg.implicitWidth+100);
     }
     height: msg.implicitHeight + 24 + 100
 
@@ -37,7 +36,7 @@ Item {
             border.color: backGroundColor
             Image {
                 id:img
-                anchors.centerIn: parent
+                anchors.centerIn: parent.top
                 source: "/error.png"
             }
         }
@@ -103,14 +102,13 @@ Item {
         horizontalAlignment: Text.AlignHCenter
     }
 
-    function openMsg(type,message) {
+    function openMsg(message,type) {
         switch(type){
         case 0:img.source="/sucess.png";break;
         case 1:img.source="/information.png";break;
         case 2:img.source="/alert.png";break;
         case 3:img.source="/error.png";break;
         }
-
         msg.text=message
         root.x = (parent.width - dialog.width) * 0.5
         root.y = (parent.height - dialog.height) * 0.5

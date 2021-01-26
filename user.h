@@ -3,11 +3,11 @@
 #include<Qt>
 #include<QString>
 #include<QObject>
-class User : QObject
+class User
 {
 public:
     User();
-    long id;
+    qlonglong id;
     QString username;
     QString nickname;
     QString password ;
@@ -15,7 +15,7 @@ public:
     QString county;
     QString city;
     QString province;
-    QString origin;
+    qlonglong origin;
 };
 
 #endif // USER_H

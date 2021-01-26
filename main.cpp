@@ -5,6 +5,7 @@
 #include <QQuickView>
 #include <QDebug>
 #include <logincontrol.h>
+
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -14,5 +15,6 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
     LoginControl* login = new LoginControl(engine);
+    qputenv( "QT_SSL_USE_TEMPORARY_KEYCHAIN", "1" );
     return app.exec();
 }
