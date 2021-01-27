@@ -1,5 +1,6 @@
 #include "core.h"
-User Core::user;
+User* Core::user = new User();
+User* Core::agent = new User();
 Core::Core()
 {
 

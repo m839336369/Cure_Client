@@ -36,6 +36,8 @@
 // JQLibrary lib import
 #include <JQDeclare>
 #include <QJsonObject>
+#include <QJsonArray>
+#include <core.h>
 namespace JQNet
 {
 
@@ -168,6 +170,8 @@ public:
     static QPair< bool, QByteArray > post(const QNetworkRequest &request, const QByteArray &body, const int &timeout = 30 * 1000);
 
     static bool post(const QString &url, QJsonObject &json,const int &timeout  = 30 * 1000);
+
+    static bool post(const QString &url, QJsonObject &json,QJsonArray &array,const int &timeout  = 30 * 1000);
 
     static QPair< bool, QPair< QList< QNetworkReply::RawHeaderPair >, QByteArray > > post2(const QNetworkRequest &request, const QByteArray &body, const int &timeout = 30 * 1000);
 

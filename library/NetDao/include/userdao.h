@@ -3,14 +3,19 @@
 #include "user.h"
 #include <QtCore>
 #include <JQNet>
+#include <QList>
+#include <core.h>
 class UserDao
 {
 public:
     UserDao();
+    static bool grantAgentById(QString agent_id,int agent_type,QString &respond);
     static bool registerUser(QString username,QString password,QString &respond);
-    static bool getUserById(long id,User &outUser);
-    static bool validUser(QString username,QString password,User &outuser);
-    static bool updateUser(QString username,QString nickname,QString password,QString province,QString city,QString county);
+    static bool getUserById(QString id,User &outUser);
+    static bool validUser(QString username,QString password,User *outuser);
+    static bool updateUser(QString username,QString nickname,QString province,QString city,QString county,QString &respond);
+    static bool queryChildAgents(QList<QObject*> &agents);
+    static bool removeAgent(QString agent_id);
 };
 
 

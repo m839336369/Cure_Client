@@ -15,7 +15,7 @@ Page {
         font.pixelSize: 25
         font.bold: true
         font.family: "楷体"
-        text: "涯丶"
+        text: user.nickname
     }
     Rectangle{
         id:user_information_layout
@@ -29,15 +29,16 @@ Page {
             font.bold: true
             font.family: "楷体"
             anchors.topMargin: 10
-            anchors.right: user_user_id_textField.left
+            anchors.right: user_user_id_show_label.left
             anchors.top: parent.top
         }
-        TextField{
-            id:user_user_id_textField
-            text: user_id
+        Label{
+            id:user_user_id_show_label
+            text: user.id
             anchors.right: parent.horizontalCenter
             anchors.top: parent.top
             anchors.rightMargin: 50
+            anchors.topMargin: 10
             font.pixelSize: 13
             font.bold: true
             font.family: "楷体"
@@ -57,7 +58,7 @@ Page {
         }
         TextField{
             id:user_username_textField
-            text: username
+            text: user.username
             anchors.left: user_username_label.right
             anchors.top: parent.top
             font.pixelSize: 13
@@ -75,7 +76,7 @@ Page {
         spacing: 15
         TextField{
             id:user_province_textField
-            text: province
+            text: user.province
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             enabled: false
@@ -85,7 +86,7 @@ Page {
         }
         TextField{
             id:user_city_textField
-            text: city
+            text: user.city
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             enabled: false
@@ -95,7 +96,7 @@ Page {
         }
         TextField{
             id:user_county_textField
-            text: county
+            text: user.county
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             enabled: false
@@ -117,7 +118,7 @@ Page {
         font.pixelSize: 12
         font.bold: true
         font.family: "楷体"
-        currentIndex: type
+        currentIndex: user.type
     }
     Button{
         id:user_query_button
@@ -127,5 +128,9 @@ Page {
         width: 200
         height: 50
         text: "保存"
+        onClicked: {
+            userManageWindow.updateUser(user_user_id_show_label.text,user_username_textField.text,user_nickname_textField.text
+                                        ,user_province_textField.text,user_city_textField.text,user_county_textField.text)
+        }
     }
 }

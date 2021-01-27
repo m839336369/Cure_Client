@@ -5,7 +5,8 @@ class Core
 {
 public:
     Core();
-    static User user;
+    static User* user;
+    static User* agent;
 };
 
 #endif // CORE_H

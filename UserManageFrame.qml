@@ -1,10 +1,14 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.3
+
 Page {
     id: root
     visible: true
     title: qsTr("中医四诊仪")
+    UserQueryDialog{
+        id:userQueryDialog
+    }
     Row{
         id:user_layout
         anchors.top: parent.top
@@ -41,26 +45,27 @@ Page {
     }
     ListView {
         id: users_listView
+        objectName: "users_listView"
         anchors.bottom: parent.bottom
         anchors.top:user_layout.bottom
         anchors.left: parent.left
+        anchors.right: childUser_layout.left
         rightMargin: 20
         leftMargin: 20
         topMargin: 20
-        width: 500
         clip: true
-        highlight: Rectangle { color: "lightblue"; radius: 10 }
-        model:users_model
-        delegate: UserItem{}
+        highlight: Rectangle { color: "lightblue"; radius: 10 ;width: 500}
+        delegate:UserItem{}
     }
     Rectangle{
         id:childUser_layout
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.top: user_layout.top
-        width: 300
         border.color: "blue"
-        border.width: 5
+        border.width: 1
+        radius: 10
+        width: 300
         Label{
             id:childUser_nickname_label
             anchors.top:parent.top
@@ -71,7 +76,7 @@ Page {
             font.pixelSize: 25
             font.bold: true
             font.family: "楷体"
-            text: "涯丶"
+            text: agent.nickname
         }
         Row{
             id:childUser_information_layout
@@ -88,7 +93,7 @@ Page {
             }
             Label{
                 id:childUser_user_id_label
-                text: "839336369"
+                text: agent.id
                 font.pixelSize: 13
                 font.bold: true
                 font.family: "楷体"
@@ -101,7 +106,7 @@ Page {
             }
             Label{
                 id:childUser_username_label
-                text: "m839336369"
+                text:agent.username
                 font.pixelSize: 13
                 font.bold: true
                 font.family: "楷体"
@@ -115,21 +120,21 @@ Page {
             spacing: 15
             Label{
                 id:childUser_province_label
-                text: "山西省"
+                text: agent.province
                 font.pixelSize: 12
                 font.bold: true
                 font.family: "楷体"
             }
             Label{
                 id:childUser_city_label
-                text: "太原市"
+                text: agent.city
                 font.pixelSize: 12
                 font.bold: true
                 font.family: "楷体"
             }
             Label{
                 id:childUser_county_label
-                text: "杏花岭区"
+                text: agent.county
                 font.pixelSize: 12
                 font.bold: true
                 font.family: "楷体"
@@ -147,7 +152,7 @@ Page {
             font.pixelSize: 12
             font.bold: true
             font.family: "楷体"
-            currentIndex: 0
+            currentIndex: agent.type
         }
         Button{
             id:childUser_query_button
@@ -156,7 +161,10 @@ Page {
             anchors.topMargin: 30
             width: 130
             height: 50
-            text: "添加"
+            text: "查询"
+            onClicked: {
+                userQueryDialog.openMsg("请输入用户账号",1);
+            }
         }
         Button{
             id:childUser_save_button
@@ -167,7 +175,10 @@ Page {
             height: 50
             text: "保存"
             onClicked: {
-
+                if(users_listView.data.id === childUser_username_label.text){
+                    msg.openMsg("是一个");
+                }
+                userManageWindow.grantAgentById(childUser_user_id_label.text,childUser_type_ComboBox.currentIndex);
             }
         }
         Button{
@@ -179,59 +190,8 @@ Page {
             height: 50
             text: "删除"
             onClicked: {
-                var data = users_listView.model.get(users_listView.currentIndex)
-                if(userManageWindow.remove_user(childUser_user_id_label.text)){
-                    users_listView.model.remove(users_listView.currentIndex);
-                    msg.openMsg("删除成功",0)
-                }
-                else {
-                    msg.openMsg("删除失败",3)
-                }
+                userManageWindow.remove_user(childUser_user_id_label.text);
             }
         }
     }
-    MsgDialog{
-        id:msg
-    }
-
-    ListModel{
-        id:users_model;//model对象中 有数组ListElement 存储所有的列表数据对象
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-        ListElement{user_id:1;username:12345;nickname:"5";type:0;county:"杏花岭区";city:"太原市";province:"山西省"}
-
-    }
-
 }

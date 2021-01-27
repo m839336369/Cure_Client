@@ -7,6 +7,10 @@ ApplicationWindow {
     height: 640
     visible: true
     title: qsTr("中医四诊仪")
+    MsgDialog{
+        id:msg
+        objectName: "msgDialog"
+    }
     TabBar{
         id:menu_tab
         anchors.top: parent.top

@@ -4,14 +4,19 @@
 #include <QQmlContext>
 #include <user.h>
 #include <core.h>
+#include <userdao.h>
 class UserManageControl : QObject
 {
     Q_OBJECT
 public slots:
-    bool update_user(qlonglong user_id,int type);
-    bool remove_user(qlonglong user_id);
+    bool getAgentById(QString id);
+    bool grantAgentById(QString agent_id,int agent_type);
+    bool updateUser(QString username,QString nickname,QString province,QString city,QString county);
+    bool remove_user(QString user_id);
+    bool queryChildAgents();
 public:
     QQmlApplicationEngine *engine;
+    QList<QObject*> agents;
     UserManageControl(QQmlApplicationEngine &engine);
 };
 

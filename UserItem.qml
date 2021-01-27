@@ -1,43 +1,80 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.5
 ItemDelegate {
-    width: 500
+    width: 450
     height: 30
     highlighted: ListView.isCurrentItem
     onClicked: {
         users_listView.currentIndex = index
-        childUser_user_id_label.text = user_id
-        childUser_nickname_label.text = nickname
-        childUser_username_label.text = username
-        childUser_type_ComboBox.currentIndex = type
-        childUser_province_label.text = province
-        childUser_city_label.text = city
-        childUser_county_label.text = county
+        agent.id = id_item.text
+        agent.nickname = nickname_item.text
+        agent.username = username_item.text
+        agent.type = type_convert(type_item.text)
+        agent.province = province_item.text
+        agent.city = city_item.text
+        agent.county = county_item.text
     }
-
     Row{
+        spacing: 10
         width: parent.width
-        spacing: 18
+        height: 30
         Label{
-            text: username
+            id:id_item
+            width: 50
+            height: 30
+            text: model.modelData.id
+            visible: false
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
         Label{
-            text: nickname
+            width: 100
+            height: 30
+            id:username_item
+            text: model.modelData.username
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
         Label{
-            text: type_deconvert(type)
+            id:nickname_item
+            text: model.modelData.nickname
+            width: 80
+            height: 30
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
         Label{
-            text:province
+            id:type_item
+            text: type_deconvert(model.modelData.type)
+            width: 50
+            height: 30
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
         Label{
-            text:city
+            id:province_item
+            text:model.modelData.province
+            width: 50
+            height: 30
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
         Label{
-            text:county
+            id:city_item
+            text:model.modelData.city
+            width: 50
+            height: 30
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
-
-
+        Label{
+            id:county_item
+            text:model.modelData.county
+            width: 50
+            height: 30
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
     }
     function type_deconvert(type){
         switch(type){
@@ -46,6 +83,15 @@ ItemDelegate {
             case 2:return "市级代理"
             case 3:return "省级代理"
             case 4:return "超级用户"
+        }
+    }
+    function type_convert(type){
+        switch(type){
+            case "普通用户":return 0
+            case "县级代理":return 1
+            case "市级代理":return 2
+            case "省级代理":return 3
+            case "超级用户":return 4
         }
     }
 }

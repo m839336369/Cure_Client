@@ -8,10 +8,11 @@ LoginControl::LoginControl(QQmlApplicationEngine &engine)
     this->engine = &engine;
 }
 bool LoginControl::login_click(QString username,QString password){
-    User user;
+    User* user = new User();
     if(UserDao::validUser(username,password,user)){
         Core::user = user;
         UserManageControl* control = new UserManageControl(*engine);
+        delete this;
         return true;
     }
     else {
@@ -21,7 +22,6 @@ bool LoginControl::login_click(QString username,QString password){
 bool LoginControl::registerUser(QString username,QString password){
     QString respond;
     if(UserDao::registerUser(username,password,respond)){
-
         QMetaObject::invokeMethod(engine->rootObjects()[0]->findChild<QObject*>("msgDialog"),"openMsg",Q_ARG(QVariant,QVariant(respond)),Q_ARG(QVariant,QVariant(0)));
         return true;
     }
