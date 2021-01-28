@@ -11,6 +11,7 @@ SOURCES += \
         core.cpp \
         logincontrol.cpp \
         main.cpp \
+        positem.cpp \
         user.cpp \
         usermanagecontrol.cpp
 RESOURCES += qml.qrc \
@@ -33,6 +34,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     core.h \
     logincontrol.h \
+    positem.h \
     user.h \
     usermanagecontrol.h
 

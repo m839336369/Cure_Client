@@ -32,18 +32,19 @@ Page {
             anchors.right: user_user_id_show_label.left
             anchors.top: parent.top
         }
-        Label{
+        TextField{
             id:user_user_id_show_label
             text: user.id
+            enabled: false
             anchors.right: parent.horizontalCenter
             anchors.top: parent.top
             anchors.rightMargin: 50
-            anchors.topMargin: 10
             font.pixelSize: 13
             font.bold: true
             font.family: "楷体"
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            placeholderText:qsTr("请输入您的昵称")
         }
         Label{
             id:user_username_label
@@ -66,6 +67,7 @@ Page {
             font.family: "楷体"
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            placeholderText:qsTr("请输入您的账号")
         }
     }
     Row{
@@ -129,7 +131,7 @@ Page {
         height: 50
         text: "保存"
         onClicked: {
-            userManageWindow.updateUser(user_user_id_show_label.text,user_username_textField.text,user_nickname_textField.text
+            userManageWindow.updateUser(user_username_textField.text,user_nickname_textField.text
                                         ,user_province_textField.text,user_city_textField.text,user_county_textField.text)
         }
     }

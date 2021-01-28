@@ -19,6 +19,7 @@ UserManageControl::UserManageControl(QQmlApplicationEngine &engine)
     engine.load(url);
     this->engine = &engine;
     queryChildAgents();
+    QMetaObject::invokeMethod(engine.rootObjects()[1]->findChild<QObject*>("userManageFrame"),"init");
 }
 bool UserManageControl::updateUser(QString username,QString nickname,QString province,QString city,QString county){
     QString respond;
@@ -47,6 +48,7 @@ bool UserManageControl::remove_user(QString agent_id){
 }
 bool UserManageControl::queryChildAgents(){
     qDeleteAll(agents);
+    agents.clear();
     if(UserDao::queryChildAgents(agents)){
         engine->rootObjects()[1]->findChild<QObject*>("users_listView")->setProperty("model",QVariant::fromValue(agents));
         return true;
@@ -75,13 +77,17 @@ bool UserManageControl::getAgentById(QString id){
         return false;
     }
 }
-bool UserManageControl::grantAgentById(QString agent_id,int agent_type){
+bool UserManageControl::grantAgentById(QString agent_id,int agent_type,QString name,QString agent_province,QString agent_city,QString agent_county){
     QString respond;
-    if(UserDao::grantAgentById(agent_id,agent_type,respond)){
+    if(UserDao::grantAgentById(agent_id,agent_type,name,respond)){
         int flag = true;
         for(int i=0;i<agents.size();i++){
             if(qobject_cast<User*>(agents.at(i))->id == agent_id){
-                qobject_cast<User*>(agents.at(i))->settype(agent_type);
+                User *user = qobject_cast<User*>(agents.at(i));
+                user->settype(agent_type);
+                user->setprovince(agent_province);
+                user->setcity(agent_city);
+                user->setcounty(agent_county);
                 flag = false;
             }
         }
@@ -104,6 +110,25 @@ bool UserManageControl::grantAgentById(QString agent_id,int agent_type){
     }
     else{
         QMetaObject::invokeMethod(engine->rootObjects()[1]->findChild<QObject*>("msgDialog"),"openMsg",Q_ARG(QVariant,QVariant(respond)),Q_ARG(QVariant,QVariant(3)));
+        return false;
+    }
+}
+bool UserManageControl::queryPos(int type,QString name){
+    QStringList list;
+    if(UserDao::queryPos(type,name,list)){
+        if(type == 0){
+            engine->rootObjects()[1]->findChild<QObject*>("choose_county_combox")->setProperty("model",QVariant::fromValue(list));
+        }
+        else if(type == 1){
+            engine->rootObjects()[1]->findChild<QObject*>("choose_city_combox")->setProperty("model",QVariant::fromValue(list));
+        }
+        else if(type == 2){
+            engine->rootObjects()[1]->findChild<QObject*>("choose_province_combox")->setProperty("model",QVariant::fromValue(list));
+        }
+        return true;
+    }
+    else{
+        QMetaObject::invokeMethod(engine->rootObjects()[1]->findChild<QObject*>("msgDialog"),"openMsg",Q_ARG(QVariant,QVariant("网络出现故障,请重新登录尝试")),Q_ARG(QVariant,QVariant(3)));
         return false;
     }
 }

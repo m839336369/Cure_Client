@@ -559,8 +559,6 @@ bool JQNet::HTTP::post(const QString &url,QJsonObject &json, QJsonArray &array,c
     json.insert("id",Core::user->id);
     json.insert("token",Core::user->token);
     document.setObject(json);
-    json.insert("id",Core::user->id);
-    json.insert("token",Core::user->token);
     QPair< bool, QByteArray > request = post(url,document.toJson(),timeout);
     qDebug()<<request.second;
     QJsonDocument result = QJsonDocument::fromJson(request.second);

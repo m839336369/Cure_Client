@@ -6,50 +6,97 @@ Page {
     id: root
     visible: true
     title: qsTr("中医四诊仪")
+    objectName: "userManageFrame"
     UserQueryDialog{
         id:userQueryDialog
     }
-    Row{
-        id:user_layout
-        anchors.top: parent.top
+    function init(){
+        choose_province_combox.model = [user.province]
+        choose_city_combox.model = [user.city]
+        choose_county_combox.model = [user.county]
+        choose_type_comboBox.enabled = false;
+        choose_city_combox.enabled = false;
+        choose_county_combox.enabled = false;
+        choose_province_combox.enabled = false
+        if(user.type === 0){
+
+        }
+        else if(user.type === 1){
+            choose_type_comboBox.enabled = true;
+            choose_type_comboBox.model = ["普通用户"]
+        }
+        else if(user.type === 2){
+            choose_county_combox.model = true;
+            choose_type_comboBox.enabled = true;
+            userManageWindow.queryPos(0,user.city);
+            choose_type_comboBox.model = ["普通用户","区级代理"]
+        }
+        else if(user.type === 3){
+            choose_type_comboBox.enabled = true;
+            choose_city_combox.enabled = true;
+            choose_county_combox.enabled = true;
+            userManageWindow.queryPos(0,user.city);
+            userManageWindow.queryPos(1,user.province);
+            choose_type_comboBox.model = ["普通用户","区级代理","市级代理"]
+        }
+        else if(user.type === 4){
+            choose_type_comboBox.enabled = true;
+            choose_city_combox.enabled = true;
+            choose_county_combox.enabled = true;
+            choose_province_combox.enabled = true
+            userManageWindow.queryPos(2,user.province);
+            choose_type_comboBox.model = ["普通用户","区级代理","市级代理","省级代理"]
+        }
+        else {
+            choose_type_comboBox.enabled = true;
+            choose_city_combox.enabled = true;
+            choose_county_combox.enabled = true;
+            choose_province_combox.enabled = true
+            userManageWindow.queryPos(user.type,user.province);
+            choose_type_comboBox.model = ["普通用户","区级代理","市级代理","省级代理"]
+        }
+    }
+
+    function type_deconvert(type){
+        switch(type){
+            case 0:return "普通用户"
+            case 1:return "县级代理"
+            case 2:return "市级代理"
+            case 3:return "省级代理"
+            case 4:return "超级用户"
+            default:return "空用户权限"
+        }
+    }
+    Label{
+        id:name_label
+        anchors.verticalCenter:user_list_refresh_button.verticalCenter
+        anchors.right: user_list_refresh_button.left
         anchors.left: parent.left
-        anchors.topMargin: 30
-        anchors.leftMargin: 100
-        Label{
-            id:name_label
-            wrapMode: "WordWrap"
-            font.pixelSize: 18
-            font.bold: true
-            font.family: "楷体"
-            text:"涯"
-        }
-        Label{
-            font.pixelSize: 15
-            font.bold: true
-            font.family: "楷体"
-            text: ",您好！"
-        }
-        Label{
-            font.pixelSize: 15
-            font.bold: true
-            font.family: "楷体"
-            text: "     您当前的账户权限："
-        }
-        Label{
-            id:priority_label
-            font.pixelSize: 15
-            font.bold: true
-            font.family: "楷体"
-            text: "省级代理"
-        }
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        font.pixelSize: 15
+        font.bold: true
+        font.family: "楷体"
+        text:" " + user.nickname + ",您好! 您当前的账户权限：" + type_deconvert(user.type)
+    }
+    Button{
+        id:user_list_refresh_button
+        anchors.top: parent.top
+        anchors.right: childname_label.left
+        anchors.rightMargin: 20
+        font.pixelSize: 15
+        font.bold: true
+        font.family: "楷体"
+        text: "刷新"
+        onClicked: userManageWindow.queryChildAgents();
     }
     ListView {
         id: users_listView
         objectName: "users_listView"
         anchors.bottom: parent.bottom
-        anchors.top:user_layout.bottom
+        anchors.top:user_list_refresh_button.bottom
         anchors.left: parent.left
-        anchors.right: childUser_layout.left
+        anchors.right: childname_label.left
         rightMargin: 20
         leftMargin: 20
         topMargin: 20
@@ -58,31 +105,44 @@ Page {
         delegate:UserItem{}
     }
     Rectangle{
-        id:childUser_layout
+        id:childname_label
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.top: user_layout.top
+        anchors.top: name_label.top
         border.color: "blue"
         border.width: 1
+        anchors.topMargin: 20
         radius: 10
         width: 300
-        Label{
-            id:childUser_nickname_label
+        Row{
+            id:childUser_name_layout
             anchors.top:parent.top
-            width: parent.width
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            anchors.topMargin: 50
-            font.pixelSize: 25
-            font.bold: true
-            font.family: "楷体"
-            text: agent.nickname
+            anchors.topMargin: 20
+            anchors.horizontalCenter: childname_label.horizontalCenter
+            Label{
+                id:childUser_type_label
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 25
+                font.bold: true
+                font.family: "楷体"
+                text: "[" +type_deconvert(agent.type) + "] "
+            }
+            Label{
+                id:childUser_nickname_label
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 25
+                font.bold: true
+                font.family: "楷体"
+                text: agent.nickname
+            }
         }
         Row{
             id:childUser_information_layout
-            anchors.top: childUser_nickname_label.bottom
-            anchors.horizontalCenter: childUser_layout.horizontalCenter
-            anchors.topMargin: 60
+            anchors.top: childUser_name_layout.bottom
+            anchors.horizontalCenter: childname_label.horizontalCenter
+            anchors.topMargin: 30
             height: 30
             spacing: 20
             Label{
@@ -115,25 +175,25 @@ Page {
         Row{
             id:childUser_location_layout
             anchors.top: childUser_information_layout.bottom
-            anchors.horizontalCenter: childUser_layout.horizontalCenter
-            anchors.topMargin: 30
+            anchors.horizontalCenter: childname_label.horizontalCenter
+            anchors.topMargin: 20
             spacing: 15
             Label{
-                id:childUser_province_label
+                id:childUser_province_combox
                 text: agent.province
                 font.pixelSize: 12
                 font.bold: true
                 font.family: "楷体"
             }
             Label{
-                id:childUser_city_label
+                id:childUser_city_combox
                 text: agent.city
                 font.pixelSize: 12
                 font.bold: true
                 font.family: "楷体"
             }
             Label{
-                id:childUser_county_label
+                id:childUser_county_combox
                 text: agent.county
                 font.pixelSize: 12
                 font.bold: true
@@ -141,7 +201,7 @@ Page {
             }
         }
         ComboBox{
-            id:childUser_type_ComboBox
+            id:choose_type_comboBox
             anchors.top: childUser_location_layout.bottom
             anchors.left: parent.left
             anchors.right: parent.right
@@ -152,13 +212,51 @@ Page {
             font.pixelSize: 12
             font.bold: true
             font.family: "楷体"
-            currentIndex: agent.type
+            currentIndex: 0
+        }
+        Column{
+            id:choose_location_layout
+            anchors.top: choose_type_comboBox.bottom
+            anchors.horizontalCenter: childname_label.horizontalCenter
+            anchors.topMargin: 5
+            spacing: 5
+            Row{
+                spacing: 20
+                ComboBox{
+                    id:choose_province_combox
+                    objectName: "choose_province_combox"
+                    font.pixelSize: 12
+                    font.bold: true
+                    font.family: "楷体"
+                    onCurrentTextChanged: {
+                        userManageWindow.queryPos(1,currentText);
+                    }
+                }
+                ComboBox{
+                    id:choose_city_combox
+                    objectName:"choose_city_combox"
+                    font.pixelSize: 12
+                    font.bold: true
+                    font.family: "楷体"
+                    onCurrentTextChanged: {
+                        userManageWindow.queryPos(0,currentText);
+                    }
+                }
+            }
+            ComboBox{
+                id:choose_county_combox
+                objectName: "choose_county_combox"
+                width: parent.width
+                font.pixelSize: 12
+                font.bold: true
+                font.family: "楷体"
+            }
         }
         Button{
             id:childUser_query_button
-            anchors.top:childUser_type_ComboBox.bottom
-            anchors.horizontalCenter: childUser_layout.horizontalCenter
-            anchors.topMargin: 30
+            anchors.top:choose_location_layout.bottom
+            anchors.horizontalCenter: childname_label.horizontalCenter
+            anchors.topMargin: 10
             width: 130
             height: 50
             text: "查询"
@@ -169,23 +267,40 @@ Page {
         Button{
             id:childUser_save_button
             anchors.top:childUser_query_button.bottom
-            anchors.horizontalCenter: childUser_layout.horizontalCenter
-            anchors.topMargin: 30
+            anchors.horizontalCenter: childname_label.horizontalCenter
+            anchors.topMargin: 20
             width: 130
             height: 50
-            text: "保存"
+            text: "授予"
             onClicked: {
-                if(users_listView.data.id === childUser_username_label.text){
-                    msg.openMsg("是一个");
+                var name;
+                if(choose_type_comboBox.currentIndex === 0){
+                    name = "";
                 }
-                userManageWindow.grantAgentById(childUser_user_id_label.text,childUser_type_ComboBox.currentIndex);
+                else if(choose_type_comboBox.currentIndex === 1){
+                    name = choose_county_combox.currentText;
+                }
+                else if(choose_type_comboBox.currentIndex === 2){
+                    name = choose_city_combox.currentText;
+                }
+                else if(choose_type_comboBox.currentIndex === 3){
+                    name = choose_province_combox.currentText;
+                }
+                if(userManageWindow.grantAgentById(childUser_user_id_label.text,choose_type_comboBox.currentIndex,name
+                                                   ,choose_province_combox.currentText,choose_city_combox.currentText,choose_county_combox.currentText)){
+                    childUser_type_label.text = choose_type_comboBox.currentText;
+                    agent.type = choose_type_comboBox.currentIndex;
+                    agent.province = choose_province_combox.currentText;
+                    agent.city = choose_city_combox.currentText;
+                    agent.county = choose_county_combox.currentText;
+                }
             }
         }
         Button{
             id:childUser_delete_button
             anchors.top:childUser_save_button.bottom
-            anchors.horizontalCenter: childUser_layout.horizontalCenter
-            anchors.topMargin: 30
+            anchors.horizontalCenter: childname_label.horizontalCenter
+            anchors.topMargin: 20
             width: 130
             height: 50
             text: "删除"

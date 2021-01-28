@@ -83,6 +83,7 @@ ItemDelegate {
             case 2:return "市级代理"
             case 3:return "省级代理"
             case 4:return "超级用户"
+            default:return "空用户权限"
         }
     }
     function type_convert(type){
@@ -92,6 +93,7 @@ ItemDelegate {
             case "市级代理":return 2
             case "省级代理":return 3
             case "超级用户":return 4
+            default:msg.openMsg("权限错误");
         }
     }
 }

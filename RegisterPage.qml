@@ -27,7 +27,7 @@ Page {
 
     TextField {
         id: register_username_text
-        placeholderText: qsTr("Text Field")
+        placeholderText: qsTr("10位字母数字")
         font.pixelSize: 15
         anchors.topMargin: -10
         anchors.leftMargin: -30
@@ -51,7 +51,7 @@ Page {
 
     TextField {
         id: register_password_text
-        placeholderText: qsTr("Text Field")
+        placeholderText: qsTr("请输入复杂密码")
         font.pixelSize: 12
         anchors.topMargin: 15
         font.bold: true
@@ -74,7 +74,7 @@ Page {
 
     TextField {
         id: register_again_text
-        placeholderText: qsTr("Text Field")
+        placeholderText: qsTr("重复密码")
         font.pixelSize: 12
         anchors.topMargin: 15
         font.bold: true
@@ -92,7 +92,9 @@ Page {
         text: "注册"
         width: 120
         onClicked: {
-            loginControl.registerUser(register_username_text.text,register_password_text.text);
+            if(loginControl.registerUser(register_username_text.text,register_password_text.text)){
+                applicationWindow.insertUserInformation(register_username_text.text,register_password_text.text);
+            }
         }
     }
 }

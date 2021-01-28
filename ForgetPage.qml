@@ -27,7 +27,7 @@ import QtQuick.Controls 2.5
 
     TextField {
         id: forget_username_text
-        placeholderText: qsTr("Text Field")
+        placeholderText: qsTr("您的登陆账户")
         font.pixelSize: 15
         anchors.topMargin: -10
         anchors.leftMargin: -30
@@ -51,7 +51,7 @@ import QtQuick.Controls 2.5
 
     TextField {
         id: forget_password_text
-        placeholderText: qsTr("Text Field")
+        placeholderText: qsTr("手机验证码")
         font.pixelSize: 15
         anchors.topMargin: 15
         font.bold: true
@@ -73,7 +73,7 @@ import QtQuick.Controls 2.5
 
     TextField {
         id: forget_sure_text
-        placeholderText: qsTr("Text Field")
+        placeholderText: qsTr("将作为您登陆的密码")
         font.pixelSize: 12
         anchors.topMargin: 15
         font.bold: true
