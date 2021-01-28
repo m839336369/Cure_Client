@@ -10,7 +10,7 @@ class UserDao
 {
 public:
     UserDao();
-    static bool grantAgentById(QString agent_id,int agent_type,QString name,QString &respond);
+    static bool grantAgentById(QString agent_id,int agent_type,QString agent_province,QString agent_city,QString agent_county,QString &respond);
     static bool registerUser(QString username,QString password,QString &respond);
     static bool getUserById(QString id,User &outUser);
     static bool validUser(QString username,QString password,User *outuser);

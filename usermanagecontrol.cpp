@@ -77,9 +77,9 @@ bool UserManageControl::getAgentById(QString id){
         return false;
     }
 }
-bool UserManageControl::grantAgentById(QString agent_id,int agent_type,QString name,QString agent_province,QString agent_city,QString agent_county){
+bool UserManageControl::grantAgentById(QString agent_id,int agent_type,QString agent_province,QString agent_city,QString agent_county){
     QString respond;
-    if(UserDao::grantAgentById(agent_id,agent_type,name,respond)){
+    if(UserDao::grantAgentById(agent_id,agent_type,agent_province,agent_city,agent_county,respond)){
         int flag = true;
         for(int i=0;i<agents.size();i++){
             if(qobject_cast<User*>(agents.at(i))->id == agent_id){
@@ -101,9 +101,9 @@ bool UserManageControl::grantAgentById(QString agent_id,int agent_type,QString n
             outUser->county = Core::agent->county;
             outUser->type = Core::agent->type;
             outUser->origin = Core::agent->origin;
-            QList<QVariant> list = engine->rootObjects()[1]->findChild<QObject*>("users_listView")->property("model").toList();
-            list<<QVariant::fromValue(outUser);
-            engine->rootObjects()[1]->findChild<QObject*>("users_listView")->setProperty("model",QVariant::fromValue(list));
+            agents.append(outUser);
+            engine->rootObjects()[1]->findChild<QObject*>("users_listView")->setProperty("model",QVariant::fromValue(agents));
+            engine->rootObjects()[1]->findChild<QObject*>("users_listView")->setProperty("currentIndex",QVariant::fromValue(agents.size()-1));
         }
         QMetaObject::invokeMethod(engine->rootObjects()[1]->findChild<QObject*>("msgDialog"),"openMsg",Q_ARG(QVariant,QVariant(respond)),Q_ARG(QVariant,QVariant(0)));
         return true;

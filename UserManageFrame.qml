@@ -26,7 +26,7 @@ Page {
             choose_type_comboBox.model = ["普通用户"]
         }
         else if(user.type === 2){
-            choose_county_combox.model = true;
+            choose_county_combox.enabled = true;
             choose_type_comboBox.enabled = true;
             userManageWindow.queryPos(0,user.city);
             choose_type_comboBox.model = ["普通用户","区级代理"]
@@ -35,8 +35,8 @@ Page {
             choose_type_comboBox.enabled = true;
             choose_city_combox.enabled = true;
             choose_county_combox.enabled = true;
-            userManageWindow.queryPos(0,user.city);
             userManageWindow.queryPos(1,user.province);
+            userManageWindow.queryPos(0,choose_city_combox.currentText);
             choose_type_comboBox.model = ["普通用户","区级代理","市级代理"]
         }
         else if(user.type === 4){
@@ -44,15 +44,9 @@ Page {
             choose_city_combox.enabled = true;
             choose_county_combox.enabled = true;
             choose_province_combox.enabled = true
-            userManageWindow.queryPos(2,user.province);
-            choose_type_comboBox.model = ["普通用户","区级代理","市级代理","省级代理"]
-        }
-        else {
-            choose_type_comboBox.enabled = true;
-            choose_city_combox.enabled = true;
-            choose_county_combox.enabled = true;
-            choose_province_combox.enabled = true
-            userManageWindow.queryPos(user.type,user.province);
+            userManageWindow.queryPos(2,"Country");
+            userManageWindow.queryPos(1,choose_province_combox.currentText);
+            userManageWindow.queryPos(0,choose_city_combox.currentText);
             choose_type_comboBox.model = ["普通用户","区级代理","市级代理","省级代理"]
         }
     }
@@ -88,7 +82,10 @@ Page {
         font.bold: true
         font.family: "楷体"
         text: "刷新"
-        onClicked: userManageWindow.queryChildAgents();
+        onClicked: {
+            if(userManageWindow.queryChildAgents())msg.openMsg("刷新成功",0);
+            else msg.openMsg("刷新失败",3)
+        }
     }
     ListView {
         id: users_listView
@@ -273,22 +270,8 @@ Page {
             height: 50
             text: "授予"
             onClicked: {
-                var name;
-                if(choose_type_comboBox.currentIndex === 0){
-                    name = "";
-                }
-                else if(choose_type_comboBox.currentIndex === 1){
-                    name = choose_county_combox.currentText;
-                }
-                else if(choose_type_comboBox.currentIndex === 2){
-                    name = choose_city_combox.currentText;
-                }
-                else if(choose_type_comboBox.currentIndex === 3){
-                    name = choose_province_combox.currentText;
-                }
-                if(userManageWindow.grantAgentById(childUser_user_id_label.text,choose_type_comboBox.currentIndex,name
+                if(userManageWindow.grantAgentById(childUser_user_id_label.text,choose_type_comboBox.currentIndex
                                                    ,choose_province_combox.currentText,choose_city_combox.currentText,choose_county_combox.currentText)){
-                    childUser_type_label.text = choose_type_comboBox.currentText;
                     agent.type = choose_type_comboBox.currentIndex;
                     agent.province = choose_province_combox.currentText;
                     agent.city = choose_city_combox.currentText;

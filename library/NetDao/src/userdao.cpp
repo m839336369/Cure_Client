@@ -109,12 +109,14 @@ bool UserDao::queryChildAgents(QList<QObject*> &agents){
     }
     return false;
 }
-bool UserDao::grantAgentById(QString agent_id,int agent_type,QString name,QString &respond){
+bool UserDao::grantAgentById(QString agent_id,int agent_type,QString agent_province,QString agent_city,QString agent_county,QString &respond){
     QJsonObject data;
     data.insert("head","GrantAgent");
     data.insert("agent_id",agent_id);
     data.insert("agent_type",agent_type);
-    data.insert("name",name);
+    data.insert("agent_province",agent_province);
+    data.insert("agent_city",agent_city);
+    data.insert("agent_county",agent_county);
     const bool reply = JQNet::HTTP::post("https://www.yixiangame.top:28015",data);
     if(reply){
         if(data.contains("result") && data.contains("respond")){
