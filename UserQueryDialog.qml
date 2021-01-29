@@ -56,7 +56,7 @@ Item {
                 font.family: "Microsoft Yahei"
                 color: "gray"
                 font.pixelSize: 15
-                placeholderText:"请输入该用户授权码"
+                placeholderText:"请输入该用户账户"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
             }
