@@ -10,6 +10,9 @@ Page {
     UserQueryDialog{
         id:userQueryDialog
     }
+    UserGrantDialog{
+        id:userGrantDialog
+    }
     function init(){
         choose_province_combox.model = [user.province]
         choose_city_combox.model = [user.city]
@@ -270,13 +273,7 @@ Page {
             height: 50
             text: "授予"
             onClicked: {
-                if(userManageWindow.grantAgentById(childUser_user_id_label.text,choose_type_comboBox.currentIndex
-                                                   ,choose_province_combox.currentText,choose_city_combox.currentText,choose_county_combox.currentText)){
-                    agent.type = choose_type_comboBox.currentIndex;
-                    agent.province = choose_province_combox.currentText;
-                    agent.city = choose_city_combox.currentText;
-                    agent.county = choose_county_combox.currentText;
-                }
+                userGrantDialog.openMsg("请输入该用户授予码",1);
             }
         }
         Button{

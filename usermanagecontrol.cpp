@@ -21,9 +21,9 @@ UserManageControl::UserManageControl(QQmlApplicationEngine &engine)
     queryChildAgents();
     QMetaObject::invokeMethod(engine.rootObjects()[1]->findChild<QObject*>("userManageFrame"),"init");
 }
-bool UserManageControl::updateUser(QString username,QString nickname,QString province,QString city,QString county){
+bool UserManageControl::updateUser(QString username,QString nickname,QString province,QString city,QString county,QString priority_token){
     QString respond;
-    if(UserDao::updateUser(username,nickname,province,city,county,respond)){
+    if(UserDao::updateUser(username,nickname,province,city,county,priority_token,respond)){
         QMetaObject::invokeMethod(engine->rootObjects()[1]->findChild<QObject*>("msgDialog"),"openMsg",Q_ARG(QVariant,QVariant(respond)),Q_ARG(QVariant,QVariant(0)));
         return true;
     }
@@ -77,9 +77,9 @@ bool UserManageControl::getAgentById(QString id){
         return false;
     }
 }
-bool UserManageControl::grantAgentById(QString agent_id,int agent_type,QString agent_province,QString agent_city,QString agent_county){
+bool UserManageControl::grantAgentById(QString agent_id,int agent_type,QString agent_province,QString agent_city,QString agent_county,QString priority_token){
     QString respond;
-    if(UserDao::grantAgentById(agent_id,agent_type,agent_province,agent_city,agent_county,respond)){
+    if(UserDao::grantAgentById(agent_id,agent_type,agent_province,agent_city,agent_county,priority_token,respond)){
         int flag = true;
         for(int i=0;i<agents.size();i++){
             if(qobject_cast<User*>(agents.at(i))->id == agent_id){

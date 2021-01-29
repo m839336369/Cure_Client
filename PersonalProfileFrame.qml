@@ -107,9 +107,24 @@ Page {
             font.family: "楷体"
         }
     }
+    TextField{
+        id:priority_token_text
+        anchors.top:user_location_layout.bottom
+        anchors.right: user_location_layout.right
+        anchors.left: user_location_layout.left
+        anchors.topMargin: 20
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        font.pixelSize: 14
+        font.bold: true
+        font.family: "楷体"
+        text: user.priority_token
+        placeholderText: "提权码(通过提权码的验证对您进行权限修改)"
+    }
+
     ComboBox{
         id:user_type_ComboBox
-        anchors.top: user_location_layout.bottom
+        anchors.top: priority_token_text.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.rightMargin: 20
@@ -132,7 +147,7 @@ Page {
         text: "保存"
         onClicked: {
             userManageWindow.updateUser(user_username_textField.text,user_nickname_textField.text
-                                        ,user_province_textField.text,user_city_textField.text,user_county_textField.text)
+                                        ,user_province_textField.text,user_city_textField.text,user_county_textField.text,priority_token_text.text)
         }
     }
 }

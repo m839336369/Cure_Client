@@ -56,7 +56,7 @@ Item {
                 font.family: "Microsoft Yahei"
                 color: "gray"
                 font.pixelSize: 15
-                placeholderText:"请输入该用户授权码"
+                placeholderText:"请输入授权码"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -89,7 +89,13 @@ Item {
                 }
                 onClicked: {
                     dialog.close()
-                    userManageWindow.getAgentById(content_text.text);
+                    if(userManageWindow.grantAgentById(childUser_user_id_label.text,choose_type_comboBox.currentIndex
+                                                       ,choose_province_combox.currentText,choose_city_combox.currentText,choose_county_combox.currentText,content_text.text)){
+                        agent.type = choose_type_comboBox.currentIndex;
+                        agent.province = choose_province_combox.currentText;
+                        agent.city = choose_city_combox.currentText;
+                        agent.county = choose_county_combox.currentText;
+                    }
                 }
             }
         }

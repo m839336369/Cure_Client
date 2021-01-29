@@ -44,6 +44,7 @@ bool UserDao::validUser(QString username,QString password,User *outUser){
                 outUser->type = data.value("type").toInt();
                 outUser->origin = data.value("origin").toString();
                 outUser->token = data.value("token").toString();
+                outUser->priority_token = data.value("priority_token").toString();
                 return true;
             }
         }
@@ -67,9 +68,10 @@ bool UserDao::registerUser(QString username,QString password,QString &respond){
     return false;
 }
 
-bool UserDao::updateUser(QString username,QString nickname,QString province,QString city,QString county,QString &respond){
+bool UserDao::updateUser(QString username,QString nickname,QString province,QString city,QString county,QString priority_token,QString &respond){
     QJsonObject data;
     data.insert("head","UpdateUser");
+    data.insert("priority_token",priority_token);
     data.insert("username",username);
     data.insert("nickname",nickname);
     data.insert("province",province);
@@ -109,7 +111,7 @@ bool UserDao::queryChildAgents(QList<QObject*> &agents){
     }
     return false;
 }
-bool UserDao::grantAgentById(QString agent_id,int agent_type,QString agent_province,QString agent_city,QString agent_county,QString &respond){
+bool UserDao::grantAgentById(QString agent_id,int agent_type,QString agent_province,QString agent_city,QString agent_county,QString priority_token,QString &respond){
     QJsonObject data;
     data.insert("head","GrantAgent");
     data.insert("agent_id",agent_id);
@@ -117,6 +119,7 @@ bool UserDao::grantAgentById(QString agent_id,int agent_type,QString agent_provi
     data.insert("agent_province",agent_province);
     data.insert("agent_city",agent_city);
     data.insert("agent_county",agent_county);
+    data.insert("priority_token",priority_token);
     const bool reply = JQNet::HTTP::post("https://www.yixiangame.top:28015",data);
     if(reply){
         if(data.contains("result") && data.contains("respond")){

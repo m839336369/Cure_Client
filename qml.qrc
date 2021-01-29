@@ -10,12 +10,14 @@
         <file>PersonalProfileFrame.qml</file>
         <file>MainWindow.qml</file>
         <file>UserQueryDialog.qml</file>
+        <file>UserGrantDialog.qml</file>
     </qresource>
     <qresource prefix="/custom_component">
         <file>XButton.qml</file>
         <file>XListItemTextFiled.qml</file>
         <file>MsgDialog.qml</file>
         <file>UserQueryDialog.qml</file>
+        <file>UserGrantDialog.qml</file>
     </qresource>
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>

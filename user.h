@@ -14,6 +14,7 @@ class User : public QObject
     Q_PROPERTY(QString city READ getcity WRITE setcity NOTIFY cityChanged)
     Q_PROPERTY(QString province READ getprovince WRITE setprovince NOTIFY provinceChanged)
     Q_PROPERTY(QString origin READ getorigin WRITE setorigin NOTIFY originChanged)
+    Q_PROPERTY(QString priority_token READ getpriority_token WRITE setpriority_token NOTIFY priority_tokenChanged)
 public:
     User();
     QString id;
@@ -26,6 +27,7 @@ public:
     QString origin;
     QString token;
     QString getid();
+    QString priority_token;
     void setid(const QString &id);
 
     QString getusername();
@@ -48,6 +50,9 @@ public:
 
     QString getorigin();
     void setorigin(const QString &origin);
+
+    QString getpriority_token();
+    void setpriority_token(const QString &priority_token);
 signals:
     void idChanged();
     void usernameChanged();
@@ -57,5 +62,6 @@ signals:
     void cityChanged();
     void provinceChanged();
     void originChanged();
+    void priority_tokenChanged();
 };
 #endif // USER_H

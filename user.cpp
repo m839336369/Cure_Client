@@ -67,3 +67,10 @@ void User::setorigin(const QString &origin){
     this->origin = origin;
     emit originChanged();
 }
+QString User::getpriority_token(){
+    return priority_token;
+}
+void User::setpriority_token(const QString &priority_token){
+    this->priority_token = priority_token;
+    emit originChanged();
+}

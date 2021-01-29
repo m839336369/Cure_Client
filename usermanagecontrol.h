@@ -10,8 +10,8 @@ class UserManageControl : QObject
     Q_OBJECT
 public slots:
     bool getAgentById(QString id);
-    bool grantAgentById(QString agent_id,int agent_type,QString agent_province,QString agent_city,QString agent_county);
-    bool updateUser(QString username,QString nickname,QString province,QString city,QString county);
+    bool grantAgentById(QString agent_id,int agent_type,QString agent_province,QString agent_city,QString agent_county,QString priority_token);
+    bool updateUser(QString username,QString nickname,QString province,QString city,QString county,QString priority_token);
     bool remove_user(QString user_id);
     bool queryChildAgents();
     bool queryPos(int type,QString name);
