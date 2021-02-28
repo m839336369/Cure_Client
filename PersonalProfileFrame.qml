@@ -16,6 +16,7 @@ Page {
         font.bold: true
         font.family: "楷体"
         text: user.nickname
+        placeholderText:qsTr("请输入您的昵称")
     }
     Rectangle{
         id:user_information_layout
@@ -44,7 +45,7 @@ Page {
             font.family: "楷体"
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            placeholderText:qsTr("请输入您的昵称")
+            placeholderText:qsTr("用户ID")
         }
         Label{
             id:user_username_label
@@ -137,6 +138,7 @@ Page {
         font.family: "楷体"
         currentIndex: user.type
     }
+
     Button{
         id:user_query_button
         anchors.top:user_type_ComboBox.bottom
@@ -150,4 +152,5 @@ Page {
                                         ,user_province_textField.text,user_city_textField.text,user_county_textField.text,priority_token_text.text)
         }
     }
+
 }
